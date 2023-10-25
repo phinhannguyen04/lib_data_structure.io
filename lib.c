@@ -87,7 +87,7 @@ void Insert_List(ElementType X, Position P, List *L)
             for (i = L->Last; i >= P; i--)
             {
 
-                L->Elements[i] == L->Elements[i - 1];
+                L->Elements[i] = L->Elements[i - 1];
             }
 
             L->Last++;
