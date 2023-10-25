@@ -140,6 +140,77 @@ void Delete_List(Position P, List *L)
     }
 }
 
+void sort (List *pL) {
+    
+    
+    for ( int p = 0; p < pL->Last; p++) {
+        
+        for (int q = p + 1; q <= pL->Last - 1; q++) {
+            
+            if (pL->Elements[p] > pL->Elements[q]) {
+                
+                int temp = pL->Elements[p];
+                
+                pL->Elements[p] = pL->Elements[q];
+                
+                pL->Elements[q] = temp;
+                
+                
+            }
+            
+        }
+        
+    }
+    
+}
+
+void unionSet (List L1, List L2, List *pL) {
+    
+    //tao danh sach rong
+    makenullList(&(*pL));
+
+    //insert all Elements from L1 to *pL
+    for (int i = 0; i < L1.Last; i++) {
+        
+            insertSet(L1.Elements[i], &(*pL));
+    
+        
+    }        
+    
+    //insert Elements from L2 to *pL with statement        
+    for (int j = 0; j < L2.Last; j ++){
+        
+        //if Elements[j] in L2 hadn't existed in L1 then we add it to *pL  
+        if(!member(L2.Elements[j], L1)) {
+                
+                insertSet(L2.Elements[j], &(*pL));
+                
+        }    
+}
+    
+    // for (int j = 0; j < L2.Last; j ++) {
+    //     insertSet(L2.Elements[j], &(*pL));
+    // }    
+    
+}
+
+int member(int x, List L) {
+    
+    int found = 0;
+    
+    for (int i = 1; i <= L.Last; i++) {
+        
+        if (L.Elements[i] == x) {
+            
+            found = 1;
+            
+            return found;
+        }
+        
+    }
+    return found;
+}
+
 void Print_List(List L)
 {
     Position P;
