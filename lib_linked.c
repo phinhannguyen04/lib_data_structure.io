@@ -139,6 +139,354 @@ void Read_List (List *L) {
 
 }
 
+int member (ElementType x, List L) {
+    
+    int flag = 0;
+    Position P = L;
+    while (P -> Next != NULL) {
+        if (P -> Next -> Element == x) {
+            return flag = 1;
+        }
+        P = P -> Next;
+    }
+    return flag;
+    
+}
+
+void append (ElementType x, List *pL) {
+    
+    Position P = EndList(*pL);
+    Position T = (struct Node*)malloc(sizeof(struct Node));
+    T -> Element = x;
+    T -> Next = NULL;
+    P -> Next = T;
+    
+}
+
+void normalize(List *pL) {
+    
+    Position p = *pL;
+    
+    while (p->Next != NULL) {
+        
+       Position q = p -> Next;
+        
+        while (q->Next != NULL) {
+                
+            if (p->Next->Element == q->Next->Element) {
+                
+                deleteList(q, &(*pL));
+            } 
+            else {
+                q = q->Next;
+            }
+        }
+        p = p->Next;
+    }
+    
+}
+
+/*bai tap tren else */
+
+/*
+Bằng cách sử dụng những phép toán trên tập hợp, hãy viết chương trình cho phép tìm tập hợp hợp của 2 danh sách biểu diễn tập hợp
+
+Gợi ý
+
+Khai báo kiểu List
+Định nghĩa các hàm nhập tập hợp và hiển thị danh sách
+Định nghĩa hàm tìm tập hợp hợp của 2 tập hợp
+Gọi thực thi các hàm trên trong hàm main()
+*/
+
+typedef int ElementType;
+
+struct Node {
+    ElementType Element;
+    struct Node* Next;
+};
+
+typedef struct Node* Position;
+typedef Position List;
+
+
+void makenullList(List *pL) {
+    *pL = (struct Node*)malloc(sizeof(struct Node));
+    (*pL)->Next = NULL;
+}
+
+void insert (ElementType x, Position P, List *pL) {
+
+    Position T = (struct Node*)malloc(sizeof(struct Node));
+    T -> Element = x;
+    T -> Next = P -> Next;
+    P -> Next = T;
+
+}
+
+Position first (List L) {
+    return L;
+}
+
+Position endList (List L) {
+    Position P = L;
+    while (P -> Next != NULL) {
+        P = P -> Next;
+    }
+    return P;
+}
+
+int member (ElementType x, List L) {
+    Position P = L; 
+    int flag = 0;
+    while (P->Next != NULL) {
+        if (P->Next->Element == x) {
+            return flag = 1;
+        }
+        P = P -> Next;
+    }
+    return flag;
+}
+
+void nhap (List *pL) {
+    
+    //printf("\nNhap so luong phan tu: ");
+    
+    int n;
+
+    scanf("%d", &n);
+
+    ElementType x;
+
+    for (int i = 0; i < n; i++) {
+        //printf("\nNhap phan tu: ");
+        
+        scanf("%d", &x);
+
+        if (!(member(x, *pL))) {
+            insert(x, first(*pL), &(*pL));
+        }
+    }
+}
+
+void in (List L) {
+    
+    Position P = L;
+    while (P-> Next != NULL) {
+
+        printf("%d ", P->Next->Element);
+              
+        P = P -> Next;
+    }
+    printf("\n");
+}
+
+
+
+List hop (List L1, List L2) {
+    
+    List L3;
+    
+    makenullList(&L3);
+    
+    Position P1 = L1;
+
+    while (P1->Next != NULL) {
+        insert(P1->Next->Element, endList(L3), &L3);
+        P1 = P1 -> Next;
+    }
+
+    Position P2 = L2;
+    while (P2 -> Next != NULL) {
+        if (!member(P2 -> Next -> Element, L1)) {
+            insert(P2 -> Next -> Element, endList(L3), &L3);
+        }
+        P2 = P2 -> Next;
+    }
+    
+    return L3;
+}
+
+// int main () {
+
+//     List L1, L2;
+//     makenullList(&L1);
+
+//     makenullList(&L2);
+
+//     //printf("Nhap L1: \n");
+//     nhap(&L1);
+//     //printf("in: \n");
+//     in (L1);
+
+//     //printf("Nhap L2: \n");
+//     nhap(&L2);
+//     //printf("in: \n");
+//     in (L2);
+
+//     //printf("Giao L1 vs L2: \n");
+//     in(hop(L1, L2));
+
+//     return 0;
+// }
+
+
+/*
+Bằng cách sử dụng những phép toán chuẩn trên danh sách, hãy viết chương trình cho phép xóa phần tử x xuất hiện đầu tiên trong danh sách
+
+Gợi ý
+
+Khai báo kiểu List
+Định nghĩa các hàm nhập và hiển thị danh sách
+Định nghĩa hàm xóa phần tử x được tìm thấy đầu tiên trong danh sách
+Hàm main()
+            - Gọi thực thi hàm nhập và hiển thị trong hàm main()
+
+            - Nhập vào một giá trị x
+
+            - Gọi hàm xóa phần tử x xuất hiện đầu tiên
+
+            - Hiển thị kết quả
+*/
+
+/*
+Bằng cách sử dụng những phép toán chuẩn trên danh sách, 
+hãy viết chương trình cho phép xóa phần tử x xuất hiện đầu tiên trong danh sách
+*/
+
+#include <stdio.h>
+#include <malloc.h>
+
+typedef int ElementType;
+
+struct Node {
+    ElementType Element;
+    struct Node* Next;
+};
+
+typedef struct Node* Position;
+typedef Position List;
+
+void makenullList (List *pL) {
+    *pL = (struct Node*) malloc (sizeof(struct Node));
+    (*pL) -> Next = NULL;
+}
+
+Position first (List L) {
+    return L;
+}
+
+Position endList (List L) {
+    Position P = L;
+    while (P->Next != NULL) {
+        P = P->Next;
+    }
+    return P;
+}
+
+Position locate (ElementType x, List L) {
+    Position P = L;
+    
+    int found = 0;
+
+    while (P-> Next != NULL && found == 0) {
+
+        if (P->Next->Element == x) {
+            found = 1;
+        }
+        else {
+            P = P ->Next;
+        }
+    }
+    return P;
+}
+
+void insert (ElementType x, Position P, List *pL) {
+    Position T = (struct Node*) malloc (sizeof(struct Node));
+    T -> Element = x;
+    T -> Next = P -> Next;
+    P -> Next = T;
+}
+
+void delete (Position P, List *pL) {
+    
+    Position T;
+    
+    if (P-> Next != NULL) {
+        
+        T = P -> Next;
+
+        P ->Next = P-> Next->Next;
+
+        free(T);
+    }
+
+    else {
+        printf("DS Rong");
+    }
+}
+
+
+
+void xoa (List *pL) {
+
+    ElementType x;
+    scanf("%d", &x);
+    Position P = *pL;
+
+    while (P -> Next != NULL) {
+        if (P -> Next -> Element == x) {
+            delete(locate(x, *pL), &(*pL));
+            break;
+        }
+        else {
+            P = P ->Next;
+        }
+        
+    }
+
+}
+
+void nhap (List *pL) {
+
+    
+    int n;
+    scanf("%d", &n);
+
+    ElementType x;
+
+    for (int i = 0; i < n; i++) {
+
+        scanf("%d", &x);
+        insert(x, endList(*pL), pL);
+
+    }
+
+}
+
+void in (List L) {
+    Position P = L;
+    while (P->Next != NULL) {
+        printf("%d ", P->Next->Element);
+        P = P -> Next;    
+    }
+    printf("\n");
+}
+
+// int main () {
+
+//     List L; 
+//     makenullList(&L);
+//     //printf("\nNhap: ");
+//     nhap(&L);
+//     //printf("\nIn: ");
+//     in(L);
+//     //printf("\nxoa: ");
+//     xoa(&L);
+//     //printf("\nIn: ");
+//     in(L);
+//     return 0;
+// }
 
 int main () {
     
